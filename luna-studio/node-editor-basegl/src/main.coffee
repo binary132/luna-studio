@@ -1,4 +1,4 @@
-require("modulereg").registerModule __filename, (require __filename)
+# require("modulereg").registerModule __filename, (require __filename)
 
 import * as Detector  from './detector'
 import * as Color     from 'basegl/display/Color'
@@ -141,15 +141,18 @@ myShapeF = eval basegl.localExpr () ->
 myShape = myShapeF()
 
 
-
-
-main = () ->
-
-  scene = basegl.scene {domElement: 'basegl-root'}
+install = (name) ->
+  scene = basegl.scene {domElement: name}
 
   mySymbol  = basegl.symbol myShape
   mySymbol.globalVariables.myVar = 100
   mySymbol1 = scene.add mySymbol
+
+main = () ->
+  install 'basegl-root'
+
+exports = 
+  install: install
 #   #
 #   # return
 
@@ -334,7 +337,7 @@ main = () ->
 
 
 if Detector.webgl
-  main()
+  window.run = main
 else
   warning = Detector.getWebGLErrorMessage()
   alert "WebGL not supported. #{warning}"

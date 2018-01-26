@@ -8,8 +8,8 @@ module.exports =
   , output:
     { path: path.resolve(__dirname, 'dist', 'js')
     , publicPath: '/js/'
-    , filename: 'basegl.js'
-    , library: 'basegl'
+    , filename: 'main.js'
+    , library: 'node_editor_basegl'
     , strictModuleExceptionHandling: true
     }
   , node: {
