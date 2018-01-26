@@ -1,0 +1,42 @@
+{
+  "name": "node-editor-basegl",
+  "version": "0.0.1",
+  "description": "Luna node editor using basegl.",
+  "homepage": "https://github.com/luna/luna-studio",
+  "author": "New Byte Order <contact@luna-lang.org>",
+  "main": "./dist/js/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "watch": "webpack --progress --watch",
+    "start": "webpack-dev-server --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luna/luna-studio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/luna/luna-studio/issues"
+  },
+  "devDependencies": {
+    "coffee-loader": "^0.9.0",
+    "coffeescript": "next",
+    "gl-matrix": "^2.4.0",
+    "webpack": "^3.9.1"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "stats.js": "^0.17.0",
+    "three": "^0.85.2",
+    "three-effectcomposer-es6": "^0.0.4",
+    "spectorjs": "^0.9.2",
+    "glslify-loader": "^1.0.2",
+    "raw-loader": "^0.5.1",
+    "webpack-dev-server": "^2.9.7",
+    "acorn": "^5.3.0",
+    "escodegen": "^1.9.0",
+    "glsl-gamma": "^2.0.0",
+    "opentype.js": "^0.7.3",
+    "paper": "^0.11.5"
+  }
+}
