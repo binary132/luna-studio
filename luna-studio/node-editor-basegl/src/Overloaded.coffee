@@ -242,5 +242,3 @@ function () {
 
 overloadMap2 =
   bind: 'bind'
-
-foo = overload overloadMap2, monadTestCode

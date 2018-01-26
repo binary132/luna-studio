@@ -1,28 +1,28 @@
 # require("modulereg").registerModule __filename, (require __filename)
 
-import * as Detector  from './detector'
-import * as Color     from 'basegl/display/Color'
+# import * as Detector  from './detector'
+# import * as Color     from 'basegl/display/Color'
 
-import {POINTER_EVENTS}      from 'basegl/display/DisplayObject'
-import {group}      from 'basegl/display/Symbol'
-import * as Symbol from 'basegl/display/Symbol'
-import {circle, glslShape, union, grow, negate, rect, quadraticCurve, path}      from 'basegl/display/Shape'
-import {Navigator}      from 'basegl/navigation/Navigator'
-import {world}      from 'basegl/display/World'
+# import {POINTER_EVENTS}      from 'basegl/display/DisplayObject'
+# import {group}      from 'basegl/display/Symbol'
+# import * as Symbol from 'basegl/display/Symbol'
+import {circle}      from 'basegl/display/Shape'
+# import {Navigator}      from 'basegl/navigation/Navigator'
+# import {world}      from 'basegl/display/World'
 import * as basegl from 'basegl'
-import * as Shape     from 'basegl/display/Shape'
+# import * as Shape     from 'basegl/display/Shape'
 
-M = require 'basegl/math/Common'
-
-
-import * as Animation from 'basegl/animation/Animation'
-import * as Easing    from 'basegl/animation/Easing'
-
-import {BoxSelector} from 'basegl/display/Selection'
-import * as Font from 'basegl/display/text/sdf/Atlas'
+# M = require 'basegl/math/Common'
 
 
-import {animationManager} from 'basegl/animation/Manager'
+# import * as Animation from 'basegl/animation/Animation'
+# import * as Easing    from 'basegl/animation/Easing'
+
+# import {BoxSelector} from 'basegl/display/Selection'
+# import * as Font from 'basegl/display/text/sdf/Atlas'
+
+
+# import {animationManager} from 'basegl/animation/Manager'
 
 
 # # animationManager.fpsLimit = 60
@@ -129,16 +129,18 @@ import {animationManager} from 'basegl/animation/Manager'
 # ### Testing ###
 
 
-myShapeF = eval basegl.localExpr () ->
-  base    = circle('myVar')
-  base.fill(Color.rgb [0,0,0,0.7]).move(200,200)
+# myShapeF = eval basegl.localExpr () ->
+# myShapeF = eval basegl.localExpr () ->
+#   base    = circle('myVar')
+#   base.fill(Color.rgb [0,0,0,0.7]).move(200,200)
 # #
 # # myShapeF = eval basegl.localExpr () ->
 # #   base = Shape.unionRound 16, circle(100), circle(100).moveX(160), circle(100).move(80,80), circle(100).move(80,-80)
 # #   border = base - base.shrink(16)
 # #   border.fill(Color.rgb [0,0,0,1]).move(170,250)
 
-myShape = myShapeF()
+# myShape = myShapeF()
+myShape = circle('myVar')
 
 
 install = (name) ->
@@ -151,8 +153,10 @@ install = (name) ->
 main = () ->
   install 'basegl-root'
 
+# exports
 exports = 
-  install: install
+    install: install
+# export {install}
 #   #
 #   # return
 
@@ -336,11 +340,12 @@ exports =
 
 
 
-if Detector.webgl
-  window.run = main
-else
-  warning = Detector.getWebGLErrorMessage()
-  alert "WebGL not supported. #{warning}"
+# if Detector.webgl
+window.run = main
+window.run1 = install
+# else
+#   warning = Detector.getWebGLErrorMessage()
+#   alert "WebGL not supported. #{warning}"
 
 # # ns = group [n1,n2]
 # # ns.rotation.z = 45

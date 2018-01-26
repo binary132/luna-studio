@@ -1,7 +1,7 @@
 path = require 'path'
 {View} = require 'atom-space-pen-views'
 projects = require './projects'
-nodeEditorBaseGL = require 'node_editor_basegl'
+install = require 'node_editor_basegl'
 
 uniqueTabNo = 0
 
@@ -18,7 +18,10 @@ class LunaNodeEditorTab extends View
         pushShortcutEvent = (name, arg = null) => @nodeEditor.pushEvent({_shortcut: name, _arg : arg})
         pushSearcherEvent = (name, arg = null) => @nodeEditor.pushEvent(if arg == null then {tag: name} else {tag: name, contents : arg})
         # @nodeEditor.start(@uri, mountPoint)
-        nodeEditorBaseGL.install mountPoint
+        window.mount = mountPoint
+        window.fun = install
+        # nodeEditorBaseGL mountPoint
+        # nodeEditorBaseGL.install mountPoint
 
     @content: ->
         uniqueTabNo++

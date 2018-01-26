@@ -13,7 +13,7 @@ import {Stats}            from 'Stats'
 import {setObjectProperty} from 'basegl/object/Property'
 
 import * as Color from 'basegl/display/Color'
-import * as Debug from 'basegl/debug/GLInspector'
+# import * as Debug from 'basegl/debug/GLInspector'
 import * as Property    from 'basegl/object/Property'
 import {define, mixin, configure, configureLazy, params, lazy, configure2, Composition} from 'basegl/object/Property'
 
@@ -204,7 +204,7 @@ export class Scene extends Composition
       if (event.key >= '0') && (event.key <= '9')
         @_model.materials.uniforms.displayMode = parseInt(event.key)
       else if (event.key == '`')
-        Debug.getInspector().toggle()
+        console.error 'Debug.getInspector().toggle()'
 
 
   ### API ###
