@@ -20,6 +20,7 @@ class LunaNodeEditorTab extends View
         # @nodeEditor.start @uri, mountPoint
         # nodeEditorBaseGL.install mountPoint
         window.install = => nodeEditorBaseGL.install mountPoint
+        window.nodeEditor = nodeEditorBaseGL
 
     @content: ->
         uniqueTabNo++

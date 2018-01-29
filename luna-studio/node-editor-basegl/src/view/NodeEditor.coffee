@@ -1,5 +1,15 @@
 export class NodeEditor
     constructor: (@nodes, @inputNode, @outputNode, @connections) ->
+        @nodes ?= []
+        @connections ?= []
+
+    render: =>
+        for node in @nodes
+            node.render()
+        for connection in @connections
+            connection.render()
+        @inputNode?.render()
+        @outputNode?.render()
 
 
 # expressionNodes          :: ExpressionNodesMap

@@ -1,20 +1,21 @@
-import {circle}      from 'basegl/display/Shape'
 import * as basegl from 'basegl'
 
-import {NodeEditor} from 'view/NodeEditor'
+import {NodeEditor}     from 'view/NodeEditor'
+import {ExpressionNode} from 'view/ExpressionNode'
+import {SidebarNode}    from 'view/SidebarNode'
+import {Port}           from 'view/Port'
 
-myShape = circle('myVar')
+nodeEditor = new NodeEditor()
 
+
+export getNodeEditor = -> nodeEditor
 
 export install = (name) ->
-  scene = basegl.scene {domElement: name}
-
-  mySymbol  = basegl.symbol myShape
-  mySymbol.globalVariables.myVar = 100
-  mySymbol1 = scene.add mySymbol
+    scene = basegl.scene {domElement: name}
+    nodeEditor.scene = scene
 
 main = () ->
   install 'basegl-root'
 
 window.run = main
-window.x = new NodeEditor()
+window.x = getNodeEditor()

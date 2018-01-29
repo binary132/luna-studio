@@ -1,5 +1,15 @@
+import * as basegl from 'basegl'
+import {circle} from 'basegl/display/Shape'
+
+myShape = circle 'myVar'
+
 export class ExpressionNode
     constructor: (@name, @expression, @inPorts, @outPorts, @position) ->
+
+    render: =>
+        mySymbol  = basegl.symbol myShape
+        mySymbol.globalVariables.myVar = 100
+        mySymbol1 = @scene.add mySymbol
 
 # nodeLoc'                  :: NodeLoc
 # name                      :: Maybe Text
