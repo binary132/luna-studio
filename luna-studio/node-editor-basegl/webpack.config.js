@@ -8,8 +8,9 @@ module.exports =
   , output:
     { path: path.resolve(__dirname, 'dist', 'js')
     , publicPath: '/js/'
-    , filename: 'main.js'
+    , filename: 'bundle.js'
     , library: 'node_editor_basegl'
+    , libraryTarget: 'umd'
     , strictModuleExceptionHandling: true
     }
   , node: {
@@ -27,21 +28,13 @@ module.exports =
         path.resolve(__dirname, "src"),
         "node_modules"
       ],
-  	  alias: {
-  	    'three/OrbitControls'        : path.join(__dirname, 'node_modules/three/examples/js/controls/OrbitControls.js'),
-  	    'three/EffectComposer'       : path.join(__dirname, 'node_modules/three/examples/js/postprocessing/EffectComposer.js'),
-  	    'three/CopyShader'           : path.join(__dirname, 'node_modules/three/examples/js/shaders/CopyShader.js'),
-  	    'three/HorizontalBlurShader' : path.join(__dirname, 'node_modules/three/examples/js/shaders/HorizontalBlurShader.js'),
-  	    'three/ShaderPass'           : path.join(__dirname, 'node_modules/three/examples/js/postprocessing/ShaderPass.js'),
-  	    'three/RenderPass'           : path.join(__dirname, 'node_modules/three/examples/js/postprocessing/RenderPass.js'),
-  	    'three/MaskPass'             : path.join(__dirname, 'node_modules/three/examples/js/postprocessing/MaskPass.js'),
-  	  }
+      alias: {}
   },
 
   module:
     { strictExportPresence: true
     , rules:
-      [ { use: 'coffee-loader'  , test: /\.(coffee)$/                                   }
+      [ { use: [{loader: path.resolve('./basegl-loader.js')}, 'coffee-loader']  , test: /\.(coffee)$/ }
       , { use: 'raw-loader'     , test: /\.(glsl|vert|frag)$/ , exclude: /node_modules/ }
       , { use: 'glslify-loader' , test: /\.(glsl|vert|frag)$/ , exclude: /node_modules/ }
       ]

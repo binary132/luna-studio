@@ -143,7 +143,7 @@ import * as basegl from 'basegl'
 myShape = circle('myVar')
 
 
-install = (name) ->
+export install = (name) ->
   scene = basegl.scene {domElement: name}
 
   mySymbol  = basegl.symbol myShape
@@ -154,8 +154,7 @@ main = () ->
   install 'basegl-root'
 
 # exports
-exports = 
-    install: install
+
 # export {install}
 #   #
 #   # return
