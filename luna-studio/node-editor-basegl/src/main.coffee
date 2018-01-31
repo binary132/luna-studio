@@ -3,14 +3,13 @@ import * as basegl from 'basegl'
 import {ExpressionNode} from 'view/ExpressionNode'
 import {NodeEditor}     from 'view/NodeEditor'
 
-nodeEditor = null
-
+scene = null
+nodeEditor = new NodeEditor -> scene
 
 export getNodeEditor = -> nodeEditor
 
 export install = (name) ->
     scene = basegl.scene {domElement: name}
-    nodeEditor = new NodeEditor scene
 
 main = -> install 'basegl-root'
 
@@ -28,3 +27,5 @@ debug = ->
         ]
     window.n = getNodeEditor()
     getNodeEditor().render()
+
+# debug()

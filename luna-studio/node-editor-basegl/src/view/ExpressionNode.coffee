@@ -1,6 +1,9 @@
-import * as basegl from 'basegl'
+import * as basegl    from 'basegl'
+import * as Animation from 'basegl/animation/Animation'
+import * as Easing    from 'basegl/animation/Easing'
 import * as Color     from 'basegl/display/Color'
-import {circle, glslShape, union, grow, negate, rect, quadraticCurve, path}      from 'basegl/display/Shape'
+import {world}        from 'basegl/display/World'
+import {circle, glslShape, union, grow, negate, rect, quadraticCurve, path} from 'basegl/display/Shape'
 
 nodeRadius     = 30
 gridElemOffset = 18
@@ -52,31 +55,52 @@ nodeDef = basegl.symbol nodeShape
 nodeDef.variables.selected = 0
 nodeDef.bbox.xy = [nodew + 2*nodeSelectionBorderMaxSize, nodeh + 2*nodeSelectionBorderMaxSize]
 
+### Utils ###
+
+makeDraggable = (a) ->
+  a.addEventListener 'mousedown', (e) ->
+    if e.button != 0 then return
+    symbol = e.symbol
+    s          = world.activeScene
+    fmove = (e) ->
+      symbol.position.x += e.movementX * s.camera.zoomFactor
+      symbol.position.y -= e.movementY * s.camera.zoomFactor
+    window.addEventListener 'mousemove', fmove
+    window.addEventListener 'mouseup', () =>
+      window.removeEventListener 'mousemove', fmove
+
+applySelectAnimation = (symbol, rev=false) ->
+  if symbol.selectionAnimation?
+  then symbol.selectionAnimation.reverse()
+  else
+    anim = Animation.create
+      easing      : Easing.quadInOut
+      duration    : 0.1
+      onUpdate    : (v) -> symbol.variables.selected = v
+      onCompleted :     -> delete symbol.selectionAnimation
+    if rev then anim.inverse()
+    anim.start()
+    symbol.selectionAnimation = anim
+    anim
+
+selectedComponent = null
+makeSelectable = (a) ->
+  a.addEventListener 'mousedown', (e) ->
+    if e.button != 0 then return
+    symbol = e.symbol
+    if selectedComponent == symbol then return
+    applySelectAnimation symbol
+    if selectedComponent
+      applySelectAnimation selectedComponent, true
+      selectedComponent.variables.zIndex = 1
+    selectedComponent = symbol
+    selectedComponent.variables.zIndex = -10
+
 export class ExpressionNode
     constructor: ({name: @name, expression: @expression, inPorts: @inPorts, outPorts: @outPorts, position: @position}, @scene) ->
 
     render: =>
-        mySymbol1 = @scene.add nodeDef
-        mySymbol1.position.xy = @position
-
-# nodeLoc'                  :: NodeLoc
-# name                      :: Maybe Text
-# expression                :: Text
-# isDefinition              :: Bool
-# inPorts                   :: InPortTree InPort
-# outPorts                  :: OutPortTree OutPort
-# argConstructorMode        :: Port.Mode
-# canEnter                  :: Bool
-# position                  :: Position
-# defaultVisualizer         :: Maybe Visualizer
-# visEnabled                :: Bool
-# errorVisEnabled           :: Bool
-# code                      :: Text
-# value                     :: Maybe Value
-# zPos                      :: Int
-# isSelected                :: Bool
-# isMouseOver               :: Bool
-# mode                      :: Mode
-# isErrorExpanded           :: Bool
-# execTime                  :: Maybe Integer
-# collaboration             :: Collaboration
+        node = @scene().add nodeDef
+        makeDraggable node
+        makeSelectable node
+        node.position.xy = @position

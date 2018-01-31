@@ -1,5 +1,6 @@
 import {Connection}     from 'view/Connection'
 import {ExpressionNode} from 'view/ExpressionNode'
+import {Navigator}      from 'basegl/navigation/Navigator'
 import {Port}           from 'view/Port'
 import {SidebarNode}    from 'view/SidebarNode'
 
@@ -26,6 +27,7 @@ export class NodeEditor
     setBreadcrumbs: (@breadcrumbs) =>
 
     render: =>
+        controls = new Navigator @scene()
         for node in @nodes
             node.render()
         for connection in @connections
