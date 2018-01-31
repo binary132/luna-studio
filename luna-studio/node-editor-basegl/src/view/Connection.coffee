@@ -1,4 +1,4 @@
 export class Connection
-    constructor: () ->
+    constructor: ({}, @scene) ->
 
     render: =>

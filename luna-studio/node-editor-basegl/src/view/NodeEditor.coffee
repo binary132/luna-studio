@@ -5,22 +5,24 @@ import {SidebarNode}    from 'view/SidebarNode'
 
 
 export class NodeEditor
-    constructor: (@nodes, @inputNode, @outputNode, @connections, @breadcrumbs) ->
+    constructor: (@scene) ->
         @nodes ?= []
         @connections ?= []
 
     setNodes: (nodes) =>
         @nodes = []
         for node in nodes
-            @nodes.push new ExpressionNode node
+            @nodes.push new ExpressionNode node, @scene
+        undefined
     setInputNode: (inputNode) =>
-        @inputNode = new SidebarNode inputNode
+        @inputNode = new SidebarNode inputNode, @scene
     setOutputNode: (outputNode) =>
-        @outputNode = new SidebarNode outputNode
+        @outputNode = new SidebarNode outputNode, @scene
     setConnections: (connections) =>
         @connections = []
         for connection in connections
-            @connections.push new Connection connection
+            @connections.push new Connection connection, @scene
+        undefined
     setBreadcrumbs: (@breadcrumbs) =>
 
     render: =>

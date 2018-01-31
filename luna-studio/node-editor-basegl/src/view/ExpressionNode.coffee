@@ -4,7 +4,7 @@ import {circle} from 'basegl/display/Shape'
 myShape = circle 'myVar'
 
 export class ExpressionNode
-    constructor: ({name: @name, expression: @expression, inPorts: @inPorts, outPorts: @outPorts, position: @position}) ->
+    constructor: ({name: @name, expression: @expression, inPorts: @inPorts, outPorts: @outPorts, position: @position}, @scene) ->
 
     render: =>
         mySymbol  = basegl.symbol myShape

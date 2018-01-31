@@ -1,5 +1,5 @@
 export class SidebarNode
-    constructor: ({ports: @ports, mode: @mode}) ->
+    constructor: ({ports: @ports, mode: @mode}, @scene) ->
 
     render: =>
 

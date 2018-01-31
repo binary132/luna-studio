@@ -1,5 +1,5 @@
 export class Port
-    constructor: ({name: @name}) ->
+    constructor: ({name: @name}, @scene) ->
 
     render: =>
 
