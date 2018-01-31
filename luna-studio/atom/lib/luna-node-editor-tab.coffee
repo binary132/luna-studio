@@ -17,11 +17,14 @@ class LunaNodeEditorTab extends View
         @handleEvents()
         pushShortcutEvent = (name, arg = null) => @nodeEditor.pushEvent({_shortcut: name, _arg : arg})
         pushSearcherEvent = (name, arg = null) => @nodeEditor.pushEvent(if arg == null then {tag: name} else {tag: name, contents : arg})
-        # @nodeEditor.start @uri, mountPoint
-        # nodeEditorBaseGL.install mountPoint
+        @nodeEditor.start @uri, mountPoint
+        @nodeEditor.setView nodeEditorBaseGL.getNodeEditor()
         window.install = => nodeEditorBaseGL.install mountPoint
         window.nodeEditor = nodeEditorBaseGL
-
+        try
+            nodeEditorBaseGL.install mountPoint
+        catch e
+            console.error e
     @content: ->
         uniqueTabNo++
         mountPoint = "luna-studio-mount" + uniqueTabNo

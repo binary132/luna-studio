@@ -19,6 +19,7 @@ GHCJS_CODE_BE_THERE
 
 return { start:                run
        , connector:            atomCallback.connector
+       , setView:              atomCallback.setNodeEditorView
        , onNotification:       atomCallback.onNotification
        , pushEvent:            atomCallback.pushEvent
        , setEventFilter:       atomCallback.setEventFilter

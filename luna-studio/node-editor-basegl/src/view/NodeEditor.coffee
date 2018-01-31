@@ -1,7 +1,27 @@
+import {Connection}     from 'view/Connection'
+import {ExpressionNode} from 'view/ExpressionNode'
+import {Port}           from 'view/Port'
+import {SidebarNode}    from 'view/SidebarNode'
+
+
 export class NodeEditor
-    constructor: (@nodes, @inputNode, @outputNode, @connections) ->
+    constructor: (@nodes, @inputNode, @outputNode, @connections, @breadcrumbs) ->
         @nodes ?= []
         @connections ?= []
+
+    setNodes: (nodes) =>
+        @nodes = []
+        for node in nodes
+            @nodes.push new ExpressionNode node
+    setInputNode: (inputNode) =>
+        @inputNode = new SidebarNode inputNode
+    setOutputNode: (outputNode) =>
+        @outputNode = new SidebarNode outputNode
+    setConnections: (connections) =>
+        @connections = []
+        for connection in connections
+            @connections.push new Connection connection
+    setBreadcrumbs: (@breadcrumbs) =>
 
     render: =>
         for node in @nodes

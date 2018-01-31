@@ -1,5 +1,7 @@
 export class SidebarNode
-    constructor: (@ports, @mode) ->
+    constructor: ({ports: @ports, mode: @mode}) ->
+
+    render: =>
 
 # SidebarMode:
 #   AddRemove | MoveConnect

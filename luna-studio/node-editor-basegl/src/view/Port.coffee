@@ -1,5 +1,7 @@
 export class Port
-    constructor: (@name) ->
+    constructor: ({name: @name}) ->
+
+    render: =>
 
 # Mode: Normal | Invisible | Inactive | TypeNotMatched | Highlighted | Moved Position | NameEdit
 #

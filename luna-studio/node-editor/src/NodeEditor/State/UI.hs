@@ -9,6 +9,7 @@ import           NodeEditor.React.Store         (Ref)
 
 
 data State = State { _app                  :: Ref App
+                   , _oldApp               :: App
                    , _renderNeeded         :: Bool
                    , _mousePos             :: ScreenPosition
                    }
@@ -18,5 +19,6 @@ makeLenses ''State
 mkState :: Ref App -> State
 mkState ref = State
     {- app          -} ref
+    {- oldApp       -} def
     {- renderNeeded -} False
     {- mousePos     -} (ScreenPosition $ Vector2 200 200)
