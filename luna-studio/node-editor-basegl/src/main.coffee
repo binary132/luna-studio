@@ -24,7 +24,7 @@ debug = ->
             position: [0,0]
         new ExpressionNode
             name: "bar"
-            position: [10,10]
+            position: [300,100]
         ]
     window.n = getNodeEditor()
     getNodeEditor().render()
