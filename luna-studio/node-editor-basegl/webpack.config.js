@@ -29,7 +29,7 @@ module.exports =
         "node_modules"
       ],
       alias: {
-        'three/CSS3DRenderer': path.join(__dirname, '..', 'node_modules/three/examples/js/renderers/CSS3DRenderer.js')
+        'three/CSS3DRenderer': path.join(__dirname, 'node_modules/three/examples/js/renderers/CSS3DRenderer.js')
       }
   },
 
