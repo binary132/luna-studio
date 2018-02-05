@@ -16,7 +16,8 @@ expressionNodesView new old =
         setNodes $ map convert $ HashMap.elems new
 
 data ExpressionNodeView = ExpressionNodeView
-        { name       :: String
+        { key        :: String
+        , name       :: String
         , expression :: String
         , inPorts    :: [String]
         , outPorts   :: [String]
@@ -26,6 +27,7 @@ data ExpressionNodeView = ExpressionNodeView
 instance ToJSON ExpressionNodeView
 instance Convertible ExpressionNode ExpressionNodeView where
     convert n = ExpressionNodeView
+        {- key        -} (n ^. ExpressionNode.nodeId . to show)
         {- name       -} (n ^. ExpressionNode.name . to convert . to (fromMaybe def))
         {- expression -} (n ^. ExpressionNode.expression . to convert)
         {- inPorts    -} def

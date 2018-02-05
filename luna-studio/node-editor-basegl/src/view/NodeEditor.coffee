@@ -1,3 +1,4 @@
+import {Breadcrumbs}    from 'view/Breadcrumbs'
 import {Connection}     from 'view/Connection'
 import {ExpressionNode} from 'view/ExpressionNode'
 import {Navigator}      from 'basegl/navigation/Navigator'
@@ -10,30 +11,80 @@ export class NodeEditor
         @nodes ?= []
         @connections ?= []
 
-    setNodes: (nodes) =>
-        @nodes = []
-        for node in nodes
-            @nodes.push new ExpressionNode node, @scene
-        undefined
-    setInputNode: (inputNode) =>
-        @inputNode = new SidebarNode inputNode, @scene
-    setOutputNode: (outputNode) =>
-        @outputNode = new SidebarNode outputNode, @scene
-    setConnections: (connections) =>
-        @connections = []
-        for connection in connections
-            @connections.push new Connection connection, @scene
-        undefined
-    setBreadcrumbs: (@breadcrumbs) =>
+    initialize: =>
+        @controls = new Navigator @scene()
 
-    render: =>
-        controls = new Navigator @scene()
-        for node in @nodes
-            node.render()
-        for connection in @connections
-            connection.render()
-        @inputNode?.render()
-        @outputNode?.render()
+    unsetNode: (node) =>
+        if @nodes[node.key]?
+            @nodes[node.key].detach @scene()
+            delete @nodes[node.key]
+
+    setNode: (node) =>
+        if @nodes[node.key]?
+            @nodes[node.key].set node
+        else
+            nodeView = new ExpressionNode node
+            @nodes[node.key] = nodeView
+            nodeView.attach @scene()
+
+    setNodes: (nodes) =>
+        for node in nodes
+            @setNode node
+        undefined
+
+    setInputNode: (inputNode) =>
+        if @inputNode?
+            @inputNode.set inputNode
+        else
+            @inputNode = new SidebarNode inputNode
+            @inputNode.attach @scene()
+
+    unsetInputNode: =>
+        if @inputNode?
+            @inputNode.detach @scene()
+            @inputNode = null
+
+    setOutputNode: (outputNode) =>
+        if @outputNode?
+            @outputNode.set outputNode
+        else
+            @outputNode = new SidebarNode outputNode
+            @outputNode.attach @scene()
+
+    unsetOutputNode: =>
+        if @outputNode?
+            @outputNode.detach @scene()
+            @outputNode = null
+
+    unsetConnection: (connection) =>
+        if @connections[connection.key]?
+            @connections[connection.key].detach @scene()
+            delete @connections[connection.key]
+
+    setConnection: (connection) =>
+        if @connections[connection.key]?
+            @connections[connection.key].set connection
+        else
+            connectionView = new Connection connection
+            @connections[connection.key] = connectionView
+            connectionView.attach @scene()
+
+    setConnections: (connections) =>
+        for connection in connections
+            @setConnection connection
+        undefined
+
+    setBreadcrumbs: (breadcrumbs) =>
+        if @breadcrumbs?
+            @breadcrumbs.set breadcrumbs
+        else
+            @breadcrumbs = new Breadcrumbs breadcrumbs
+            @breadcrumbs.attach @scene()
+
+    unsetBreadcrumbs: =>
+        if @breadcrumbs?
+            @breadcrumbs.detach @scene()
+            @breadcrumbs = null
 
 
 # expressionNodes          :: ExpressionNodesMap

@@ -1,5 +1,17 @@
 export class SidebarNode
-    constructor: ({ports: @ports, mode: @mode}, @scene) ->
+    constructor: (values) ->
+        @set values
+
+    set: ({ports: @ports, mode: @mode}) =>
+        @updateView()
+
+    updateView: =>
+
+    render: =>
+
+    attach: (scene) =>
+
+    detach: (scene) =>
 
     render: =>
 

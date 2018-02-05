@@ -51,9 +51,6 @@ nodeShape = basegl.expr ->
 
     border + node
 
-nodeDef = basegl.symbol nodeShape
-nodeDef.variables.selected = 0
-nodeDef.bbox.xy = [nodew + 2*nodeSelectionBorderMaxSize, nodeh + 2*nodeSelectionBorderMaxSize]
 
 ### Utils ###
 
@@ -97,10 +94,27 @@ makeSelectable = (a) ->
     selectedComponent.variables.zIndex = -10
 
 export class ExpressionNode
-    constructor: ({name: @name, expression: @expression, inPorts: @inPorts, outPorts: @outPorts, position: @position}, @scene) ->
+    constructor: (values) ->
+        @def = basegl.symbol nodeShape
+        @def.variables.selected = 0
+        @def.bbox.xy = [nodew + 2*nodeSelectionBorderMaxSize, nodeh + 2*nodeSelectionBorderMaxSize]
+        @set values
 
-    render: =>
-        node = @scene().add nodeDef
-        makeDraggable node
-        makeSelectable node
-        node.position.xy = @position
+    set: ({key: @key, name: @name, expression: @expression, inPorts: @inPorts, outPorts: @outPorts, position: @position}) ->
+        @updateView()
+
+    updateView: =>
+        if @view?
+            @view.position.xy = [@position[0], -@position[1]]
+
+    attach: (scene) =>
+        if scene.add?
+            @view = scene.add @def
+            @set @
+            makeDraggable @view
+            makeSelectable @view
+            @updateView()
+
+    detach: (scene) =>
+        @scene.remove @ref
+        @ref = null

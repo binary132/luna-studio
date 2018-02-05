@@ -16,11 +16,13 @@ connectionsView new old =
 
 
 data ConnectionView = ConnectionView
-        deriving (Generic, Show)
+        { key :: String
+        } deriving (Generic, Show)
 
 instance ToJSON ConnectionView
 instance Convertible Connection ConnectionView where
-    convert _ = ConnectionView
+    convert c = ConnectionView
+        {- key        -} (c ^. Connection.connectionId . to show)
 
 foreign import javascript safe "atomCallback.getNodeEditorView().setConnections($1)"
     setConnections' :: JSVal -> IO ()

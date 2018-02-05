@@ -1,4 +1,4 @@
-export class Connection
+export class Breadcrumbs
     constructor: (values) ->
         @set values
 
