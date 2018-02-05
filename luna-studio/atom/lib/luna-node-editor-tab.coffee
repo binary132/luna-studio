@@ -8,6 +8,7 @@ uniqueTabNo = 0
 module.exports =
 class LunaNodeEditorTab extends View
     mountPoint = ""
+    mountPoint2 = "luna-mount-basegl"
     pushShortcutEvent = null
     pushSearcherEvent = null
 
@@ -19,21 +20,31 @@ class LunaNodeEditorTab extends View
         pushSearcherEvent = (name, arg = null) => @nodeEditor.pushEvent(if arg == null then {tag: name} else {tag: name, contents : arg})
         @nodeEditor.start @uri, mountPoint
         @nodeEditor.setView nodeEditorBaseGL.getNodeEditor()
-        window.install = => nodeEditorBaseGL.install mountPoint
+        window.install = => nodeEditorBaseGL.install mountPoint2
         window.nodeEditor = nodeEditorBaseGL
         try
-            nodeEditorBaseGL.install mountPoint
+            nodeEditorBaseGL.install mountPoint2
         catch e
             console.error e
     @content: ->
         uniqueTabNo++
         mountPoint = "luna-studio-mount" + uniqueTabNo
-
-        @div
-            id: mountPoint
-            class: 'luna-studio-mount'
-            =>
-                @h1 "Loading ..."
+        @div =>
+            @div
+                style: 'display: flex; width: 100%; height: 100%'
+                =>
+                    @div
+                        id: mountPoint
+                        style: 'flex-direction:row; width: 50%; height: inherit'
+                        class: 'luna-studio-mount'
+                        =>
+                            @h1 "Loading ..."
+                    @div
+                        id: mountPoint2
+                        style: 'flex-direction:row; width: 50%; height: inherit'
+                        class: 'luna-studio-mount'
+                        =>
+                            @h1 "Loading ..."
 
     # getTitle:     -> path.basename(@uri)
     getTitle:     -> 'Node editor'
