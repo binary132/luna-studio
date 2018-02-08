@@ -10,6 +10,7 @@ import qualified NodeEditor.Event.Batch      as Batch
 import qualified NodeEditor.Event.Connection as Connection
 import           NodeEditor.Event.Shortcut   (ShortcutEvent)
 import           NodeEditor.Event.UI         (UIEvent)
+import           NodeEditor.Event.View       (ViewEvent)
 
 data Event = Init
            | Atom              Atom.Event
@@ -17,6 +18,7 @@ data Event = Init
            | Connection  Connection.Event
            | Shortcut       ShortcutEvent
            | UI                   UIEvent
+           | View               ViewEvent
            deriving (Generic, Show, NFData)
 
 makeLenses ''Event
@@ -30,6 +32,7 @@ instance IsTrackedEvent Event where
         Atom       ev -> isTracked ev
         Shortcut   ev -> isTracked ev
         UI         ev -> isTracked ev
+        View       ev -> isTracked ev
 
 instance EventName Event where
     eventName event = "NodeEditor.Event." <> consName event <> case event of
@@ -39,3 +42,4 @@ instance EventName Event where
         Connection c -> "." <> eventName c
         Shortcut s   -> "." <> eventName s
         UI u         -> "." <> eventName u
+        View u       -> "." <> eventName u

@@ -22,10 +22,15 @@ class LunaNodeEditorTab extends View
         @nodeEditor.setView nodeEditorBaseGL.getNodeEditor()
         window.install = => nodeEditorBaseGL.install mountPoint2
         window.nodeEditor = nodeEditorBaseGL
-        try
-            nodeEditorBaseGL.install mountPoint2
-        catch e
-            console.error e
+        nodeEditorBaseGL.onEvent (path, event) =>
+            console.log 'push view event', path, event
+            @nodeEditor.pushViewEvent
+                path: path
+                base: event
+        # try
+        #     nodeEditorBaseGL.install mountPoint2
+        # catch e
+        #     console.error e
     @content: ->
         uniqueTabNo++
         mountPoint = "luna-studio-mount" + uniqueTabNo
@@ -34,13 +39,13 @@ class LunaNodeEditorTab extends View
                 style: 'display: flex; width: 100%; height: 100%'
                 =>
                     @div
-                        id: mountPoint
+                        id: mountPoint2
                         style: 'flex-direction:row; width: 50%; height: inherit'
                         class: 'luna-studio-mount'
                         =>
                             @h1 "Loading ..."
                     @div
-                        id: mountPoint2
+                        id: mountPoint
                         style: 'flex-direction:row; width: 50%; height: inherit'
                         class: 'luna-studio-mount'
                         =>

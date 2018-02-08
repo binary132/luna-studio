@@ -22,5 +22,6 @@ return { start:                run
        , setView:              atomCallback.setNodeEditorView
        , onNotification:       atomCallback.onNotification
        , pushEvent:            atomCallback.pushEvent
+       , pushViewEvent:        atomCallback.view.pushEvent
        , setEventFilter:       atomCallback.setEventFilter
        }

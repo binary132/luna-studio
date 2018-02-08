@@ -5,6 +5,7 @@ removeFromArray = (array, elt) =>
 listeners =
     onEvent: []
     onNotification: []
+    view: []
 
 globalRegistry = null
 eventFilters =
@@ -53,3 +54,7 @@ module.exports =
         matchesAllowed = eventFilters.allowedEvents.some((restriction) -> eventMatchesRestriction event, restriction)
         matchesBlocked = eventFilters.blockedEvents.some((restriction) -> eventMatchesRestriction event, restriction)
         noRestrictions or matchesAllowed or not (eventFilters.blockedEvents.length == 0 or matchesBlocked)
+    view:
+        onEvent: (listener) => listeners.view.push listener
+        unOnEvent: (listener) => removeFromArray listeners.view, listener
+        pushEvent: (event) => listeners.view.forEach (listener) => listener event

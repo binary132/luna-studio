@@ -3,6 +3,7 @@ import * as Animation from 'basegl/animation/Animation'
 import * as Easing    from 'basegl/animation/Easing'
 import * as Color     from 'basegl/display/Color'
 import {world}        from 'basegl/display/World'
+import {ModelView}    from 'view/ModelView'
 import {circle, glslShape, union, grow, negate, rect, quadraticCurve, path} from 'basegl/display/Shape'
 
 nodeRadius     = 30
@@ -57,11 +58,10 @@ nodeShape = basegl.expr ->
 makeDraggable = (a) ->
   a.addEventListener 'mousedown', (e) ->
     if e.button != 0 then return
-    symbol = e.symbol
-    s          = world.activeScene
+    s = basegl.world.activeScene
     fmove = (e) ->
-      symbol.position.x += e.movementX * s.camera.zoomFactor
-      symbol.position.y -= e.movementY * s.camera.zoomFactor
+      a.position.x += e.movementX * s.camera.zoomFactor
+      a.position.y -= e.movementY * s.camera.zoomFactor
     window.addEventListener 'mousemove', fmove
     window.addEventListener 'mouseup', () =>
       window.removeEventListener 'mousemove', fmove
@@ -93,8 +93,9 @@ makeSelectable = (a) ->
     selectedComponent = symbol
     selectedComponent.variables.zIndex = -10
 
-export class ExpressionNode
+export class ExpressionNode extends ModelView
     constructor: (values) ->
+        super()
         @def = basegl.symbol nodeShape
         @def.variables.selected = 0
         @def.bbox.xy = [nodew + 2*nodeSelectionBorderMaxSize, nodeh + 2*nodeSelectionBorderMaxSize]
@@ -107,14 +108,9 @@ export class ExpressionNode
         if @view?
             @view.position.xy = [@position[0], -@position[1]]
 
-    attach: (scene) =>
-        if scene.add?
-            @view = scene.add @def
-            @set @
-            makeDraggable @view
-            makeSelectable @view
-            @updateView()
-
-    detach: (scene) =>
-        @scene.remove @ref
-        @ref = null
+    registerEvents: =>
+        makeDraggable @view
+        makeSelectable @view
+        window.view = @view
+        window.push = @pushEvent
+        @view.addEventListener 'click', (e) => @pushEvent ['node-editor', 'node'], e

@@ -5,6 +5,7 @@ module NodeEditor.Event.Source
     , atomHandler
     , movementHandler
     , sceneResizeHandler
+    , viewHandler
     , webSocketHandler
     ) where
 
@@ -15,6 +16,7 @@ import           GHCJS.Prim                        (fromJSString)
 import qualified Common.Batch.Connector.Connection as BatchConnection
 import qualified JS.Atom                           as Atom
 import qualified JS.Scene                          as Scene
+import qualified JS.View                           as View
 import qualified NodeEditor.Event.Connection       as Connection
 import           NodeEditor.Event.Event            (Event (Connection, UI))
 import           NodeEditor.Event.UI               (UIEvent (AppEvent))
@@ -34,6 +36,9 @@ sceneResizeHandler = AddHandler $ \h ->
 movementHandler :: AddHandler Event
 movementHandler = AddHandler $ \h ->
     Scene.onMovement $ h . UI . AppEvent . App.Movement
+
+viewHandler :: AddHandler Event
+viewHandler = AddHandler View.onEvent
 
 webSocketHandler :: WebSocket.WebSocket -> AddHandler Event
 webSocketHandler conn = AddHandler $ \h -> do

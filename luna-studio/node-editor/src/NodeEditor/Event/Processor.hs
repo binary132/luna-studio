@@ -35,6 +35,7 @@ import qualified NodeEditor.Handler.Port                as Port
 import qualified NodeEditor.Handler.Searcher            as Searcher
 import qualified NodeEditor.Handler.Sidebar             as Sidebar
 import qualified NodeEditor.Handler.Undo                as Undo
+import qualified NodeEditor.Handler.View                as View
 import qualified NodeEditor.Handler.Visualization       as Visualization
 import           NodeEditor.State.Global                (State)
 import           WebSocket                              (WebSocket)
@@ -56,6 +57,7 @@ actions loop =
     , Sidebar.handle
     , Undo.handle
     , Searcher.handle (scheduleEvent loop)
+    , View.handle
     , Visualization.handle
     , MockMonads.handle
     ]
@@ -83,6 +85,7 @@ connectEventSources conn loop = do
                    , JSHandlers.atomHandler
                    , JSHandlers.sceneResizeHandler
                    , JSHandlers.movementHandler
+                   , JSHandlers.viewHandler
                    ]
         mkSource (AddHandler rh) = rh $ scheduleEvent loop
     sequence_ $ mkSource <$> handlers
